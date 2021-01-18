@@ -1,0 +1,12 @@
+---
+# handlers file for lamp
+- name: restart apache2
+  service: 
+    name: httpd
+    state: restarted
+  become: True
+- name: restart firewalld
+  service: 
+    name: firewalld
+    state: restarted
+  become: True

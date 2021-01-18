@@ -1,0 +1,40 @@
+---
+# tasks file for lamp
+- name: apache, mysql and php services installed
+  yum:
+    name: '{{ pkgs }}'
+    state: present
+  notify:
+    - restart apache2
+- name: add httpd services to firewalld
+  firewalld:
+    service: http
+    state: enabled
+    permanent: yes
+    immediate: yes
+- name: Create motd
+  template:
+    src: "motd.j2"
+    dest: "/var/www/html/index.html"
+- name: apache2 listen on port {{ http_port }}
+  lineinfile: 
+    dest: /etc/httpd/conf/httpd.conf
+    regexp: "^Listen *" 
+    line: Listen {{ http_port }}
+    state: present
+  notify:
+    - restart apache2
+- name: Allow Apache to listen on tcp port http_port
+  seport:
+    ports: "{{ http_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  become: True
+- name: add port to the firewall 
+  firewalld:
+    port: "{{ http_port }}/tcp"
+    permanent: true
+    state: enabled
+  notify:
+    - restart firewalld

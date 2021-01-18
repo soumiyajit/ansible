@@ -1,0 +1,9 @@
+---
+# vars file for lamp
+pkgs:
+  - httpd
+  - mysql
+  - php
+    
+http_port: 8082
+domain: example.com
