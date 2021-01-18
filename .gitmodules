@@ -1,0 +1,3 @@
+[submodule "ansible_basic/chapter-2"]
+	path = ansible_basic/chapter-2
+	url = git@github.com:soumiyajit/ansible.git
