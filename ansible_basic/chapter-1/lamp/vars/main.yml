@@ -1,0 +1,7 @@
+---
+# vars file for lamp
+pkgs:
+  - httpd
+  - mysql
+  - php
+    
